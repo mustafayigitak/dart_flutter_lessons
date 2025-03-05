@@ -1,140 +1,213 @@
-import 'package:flutter/material.dart'; // Flutter kütüphanesini projeye dahil eder
+// Flutter uygulamasını çalıştırmak için gerekli kütüphaneyi içe aktarıyoruz.
+// import, başka bir dosyadan kod veya araçları projemize dahil eder.
+import 'package:flutter/material.dart';
 
-// Uygulamayı başlatan ana fonksiyon
+// main fonksiyonu, uygulamanın başlangıç noktasıdır.
+// void, bu fonksiyonun bir değer döndürmediğini belirtir.
 void main() {
-  runApp(const MyApp()); // MyApp sınıfını çalıştırır ve ekranda gösterir
+  // runApp, Flutter uygulamasını başlatır ve ekranda bir widget ağacı gösterir.
+  runApp(const MyApp());
 }
 
-// Flutter uygulamasının ana sınıfı
+// MyApp, uygulamanın ana widget'ıdır ve StatelessWidget'tan türetilir.
+// StatelessWidget, durumu (state) değişmeyen widget'lar için kullanılır.
 class MyApp extends StatelessWidget {
-  const MyApp({super.key}); // 'const' anahtar kelimesi, bu widget'in değişmez olduğunu belirtir. Performansı artırır.
-  // const kullanıldığında bu widget hafızada saklanır ve tekrar tekrar oluşturulmaz, böylece daha verimli çalışır.
-  
+  // const, bu widget'ın sabit olduğunu ve değişmeyeceğini belirtir.
+  // super.key, üst sınıfa bir kimlik (key)传递 eder; genellikle opsiyonel.
+  const MyApp({super.key});
+
+  // build metodu, widget'ın ekranda nasıl görüneceğini tanımlar.
+  // @override, üst sınıftaki build metodunu geçersiz kıldığımızı gösterir.
+  // Widget, geri dönüş türüdür; Flutter'da her şey bir widget'tır.
+  // BuildContext, widget'ın ağaçtaki yerini temsil eden bir parametredir.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // Sağ üstteki debug yazısını kaldırır
-      home: Scaffold(
-        appBar: AppBar(title: const Text("Dart Temelleri")), // Üst kısımda başlık gösterir
-        body: const VariableExamples(), // Sayfanın içeriğini gösterecek olan sınıf
-      ),
+      // MaterialApp, Flutter'ın temel uygulama yapısını sağlar.
+      title: 'Dart ve Flutter Öğreniyorum', // Uygulamanın adı (genelde üstte görünmez).
+      home: const MyHomePage(), // Ana ekranı belirler; MyHomePage'i başlatır.
     );
   }
 }
 
-// Değişkenler, sabitler ve tür dönüşümleri anlatılıyor
-class VariableExamples extends StatelessWidget {
-  const VariableExamples({super.key});
+// MyHomePage, durumu değişebilen bir widget'tır; StatefulWidget'tan türetilir.
+// StatefulWidget, kullanıcı etkileşimi gibi durumlarda değişebilen yapılar için kullanılır.
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
+  // createState, bu widget'ın durumunu (state) yöneten bir sınıf oluşturur.
+  // State<MyHomePage>, hangi widget’a bağlı olduğunu belirtir (generic type).
+  // =>, kısa bir fonksiyon yazımıdır; burada _MyHomePageState sınıfını döndürür.
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+// _MyHomePageState, MyHomePage'in durumunu yöneten sınıftır.
+// State sınıfından türetilir ve dinamik davranışları kontrol eder.
+// _ ile başlayan isimler, Dart’ta private (özel) olduğunu gösterir.
+class _MyHomePageState extends State<MyHomePage> {
+  // build metodu, ekranın nasıl görüneceğini tanımlar.
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0), // Kenarlardan 16 birim boşluk bırakır
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Elemanları dikeyde ortalar
-          crossAxisAlignment: CrossAxisAlignment.start, // Elemanları yatayda sola hizalar
-          children: [
-            const Text("Dart'ta Değişkenler, Sabitler ve Tür Dönüşümleri"),
-            const SizedBox(height: 10),
-            _variableSection(),
-            const SizedBox(height: 20),
-            _constantSection(),
-            const SizedBox(height: 20),
-            _typeConversionSection(),
-          ],
-        ),
+    return Scaffold(
+      // Scaffold, temel bir sayfa düzeni sağlar (üst çubuk, gövde vs.).
+      appBar: AppBar(
+        // AppBar, üstte bir başlık çubuğu oluşturur.
+        title: const Text('Dart Örnekleri'), // Başlık olarak sabit bir metin.
+        // Text, ekranda yazı göstermek için kullanılan bir widget.
+      ),
+      body: const Center(
+        // body, sayfanın ana içeriğini temsil eder.
+        // Center, içeriği ekranın ortasına hizalar.
+        child: Text('Konsolda Dart örneklerini gör!'), // child, tek bir alt widget alır.
       ),
     );
   }
 
-  // Değişkenler Bölümü
-  Widget _variableSection() {
-    int sayi = 10; // Tam sayı saklayan bir değişken
-    double oran = 5.5; // Ondalık sayı saklayan bir değişken
-    String isim = "Flutter"; // Metin (string) saklayan bir değişken
-    bool aktifMi = true; // Doğru (true) veya yanlış (false) değer saklayan değişken
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Değişkenler:"),
-        Text("Sayı: $sayi"),
-        Text("Oran: $oran"),
-        Text("İsim: $isim"),
-        Text("Aktif mi: $aktifMi"),
-      ],
-    );
+  // initState, widget ilk oluşturulduğunda bir kez çalışır.
+  // super.initState(), üst sınıfın initState metodunu çağırır (gerekli bir kural).
+  @override
+  void initState() {
+    super.initState();
+    // runDartExamples fonksiyonunu çağırarak Dart örneklerini çalıştırıyoruz.
+    runDartExamples();
   }
 
-  // Sabitler Bölümü
-  Widget _constantSection() {
-    const double pi = 3.1415; // Matematikte kullanılan sabit bir değer, derleme zamanında belirlenir.
-    final DateTime zaman = DateTime.now(); // Çalışma zamanında bir kez atanır ve değiştirilemez.
+  // runDartExamples, Dart örneklerini konsola yazdıran bir fonksiyondur.
+  // void, bu fonksiyonun değer döndürmediğini belirtir.
+  void runDartExamples() {
+    // debugPrint, Flutter'da yalnızca debug modunda çalışan bir konsol çıktısı fonksiyonudur.
+    // Bu, avoid_print linter uyarılarını çözer ve eğitim için uygun bir seçenektir.
+    debugPrint("=== DART ÖRNEKLERİ BAŞLIYOR ===");
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Sabitler:"),
-        Text("Pi sayısı: $pi"),
-        Text("Şu anki zaman: $zaman"),
-      ],
-    );
-  }
+    // --------------------------------------
+    // 1. BÖLÜM: TEMEL VERİ YAPILARI
+    // --------------------------------------
+    debugPrint("\n=== 1. BÖLÜM: TEMEL VERİ YAPILARI ===");
 
-  // Tür Dönüşümleri Bölümü
-  Widget _typeConversionSection() {
-    int sayi = 10;
-    double oran = 5.5;
-    String sayiMetin = sayi.toString(); // Tam sayıyı metne çevirir
-    int oranTamSayi = oran.toInt(); // Ondalık sayıyı tam sayıya çevirir (virgülden sonrasını atar)
-    double metinOran = double.parse("4.2"); // Metni (string) ondalık sayıya çevirir
+    // 1.1 Değişkenler ve Sabitler
+    debugPrint("1.1 Değişkenler ve Sabitler:");
+    // var, türü otomatik algılanan bir değişken tanımlar.
+    var name = "Ahmet"; // String türünde bir veri.
+    // debugPrint ile name değişkenini yazdırıyoruz.
+    // $name, string içinde değişkeni doğrudan kullanmamızı sağlar (string interpolation).
+    debugPrint("Değişken (var): $name");
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Tür Dönüşümleri:"),
-        Text("Sayıdan Metin: $sayiMetin"),
-        Text("Ondalıktan Tam Sayıya: $oranTamSayi"),
-        Text("Metinden Ondalığa: $metinOran"),
-      ],
-    );
+    // String, metin türünde bir değişken tanımlar.
+    String surname = "Yılmaz";
+    debugPrint("String değişken: $surname");
+
+    // int, tam sayı türünde bir değişken tanımlar.
+    int age = 20;
+    debugPrint("Yaş (int): $age");
+
+    // double, ondalık sayı türünde bir değişken tanımlar.
+    double height = 1.75;
+    debugPrint("Boy (double): $height");
+
+    // const, derleme zamanında sabit bir değer tanımlar; değiştirilemez.
+    const String country = "Türkiye";
+    debugPrint("Sabit (const): $country");
+
+    // final, bir kez atanır ve sonra değiştirilemez; çalışma zamanında değer alabilir.
+    final int birthYear = 2004;
+    debugPrint("Sabit (final): $birthYear");
+
+    // 1.2 Tür Dönüşümleri
+    debugPrint("\n1.2 Tür Dönüşümleri:");
+    // String türünde bir değişken.
+    String ageString = "25";
+    // int.parse, String’i tam sayıya (int) çevirir.
+    int convertedAge = int.parse(ageString);
+    debugPrint("String'den int'e: $convertedAge");
+
+    // toString, bir değeri String’e çevirir.
+    String ageToString = convertedAge.toString();
+    debugPrint("int'ten String'e: $ageToString");
+
+    // double türünde bir değişken.
+    double weight = 70.5;
+    // toInt, ondalık sayıyı tam sayıya çevirir (ondalık kısım atılır).
+    int weightInt = weight.toInt();
+    debugPrint("double'dan int'e: $weightInt");
+
+    // --------------------------------------
+    // 2. BÖLÜM: KONTROL YAPILARI VE DÖNGÜLER
+    // --------------------------------------
+    debugPrint("\n=== 2. BÖLÜM: KONTROL YAPILARI VE DÖNGÜLER ===");
+
+    // 2.1 Karşılaştırma Operatörleri
+    debugPrint("2.1 Karşılaştırma Operatörleri:");
+    // int türünde iki değişken tanımlıyoruz.
+    int num1 = 10;
+    int num2 = 20;
+    // ==, iki değerin eşit olup olmadığını kontrol eder; bool (true/false) döner.
+    bool isEqual = num1 == num2;
+    debugPrint("$num1 == $num2: $isEqual");
+
+    // >, bir değerin diğerinden büyük olup olmadığını kontrol eder.
+    bool isGreater = num1 > num2;
+    debugPrint("$num1 > $num2: $isGreater");
+
+    // <=, bir değerin diğerinden küçük veya eşit olup olmadığını kontrol eder.
+    bool isLessOrEqual = num1 <= num2;
+    debugPrint("$num1 <= $num2: $isLessOrEqual");
+
+    // 2.2 If-Else Yapısı
+    debugPrint("\n2.2 If-Else Yapısı:");
+    // if, bir koşul doğruysa içindeki kodu çalıştırır.
+    if (num1 < num2) {
+      debugPrint("$num1, $num2'den küçüktür.");
+    } else if (num1 == num2) {
+      // else if, önceki koşul yanlışsa başka bir koşulu kontrol eder.
+      debugPrint("$num1, $num2'ye eşittir.");
+    } else {
+      // else, hiçbir koşul doğru değilse çalışır.
+      debugPrint("$num1, $num2'den büyüktür.");
+    }
+
+    // 2.3 Switch-Case Yapısı
+    debugPrint("\n2.3 Switch-Case Yapısı:");
+    // int türünde bir değişken.
+    int day = 3;
+    // switch, bir değişkenin değerine göre farklı durumları kontrol eder.
+    switch (day) {
+      case 1: // day 1 ise bu blok çalışır.
+        debugPrint("Pazartesi");
+        break; // break, switch’ten çıkmayı sağlar.
+      case 2:
+        debugPrint("Salı");
+        break;
+      case 3:
+        debugPrint("Çarşamba");
+        break;
+      default: // Hiçbir case eşleşmezse bu blok çalışır.
+        debugPrint("Geçersiz gün");
+    }
+
+    // 2.4 Döngüler
+    debugPrint("\n2.4 Döngüler:");
+    // for döngüsü: Belirli bir aralıkta tekrar yapar.
+    debugPrint("for döngüsü (1-5):");
+    // int i = 1, başlangıç değeri; i <= 5, koşul; i++, her turda i’yi artırır.
+    for (int i = 1; i <= 5; i++) {
+      debugPrint("Sayı: $i");
+    }
+
+    // while döngüsü: Koşul doğru olduğu sürece çalışır.
+    int counter = 0; // Döngü için bir sayaç.
+    debugPrint("while döngüsü (0-2):");
+    while (counter < 3) {
+      debugPrint("Counter: $counter");
+      counter++; // counter’ı artırmazsak sonsuz döngü olur!
+    }
+
+    // do-while döngüsü: En az bir kez çalışır, sonra koşulu kontrol eder.
+    int value = 5;
+    debugPrint("do-while döngüsü (geri sayım):");
+    do {
+      debugPrint("Değer: $value");
+      value--; // value’yu azaltır.
+    } while (value > 0); // Koşul, döngünün devam edip etmeyeceğini belirler.
   }
 }
-
-// --- Flutter Temel Bileşenler ---
-
-// `child` Nedir?
-// child, bir widget'in içine başka bir widget koymak için kullanılır.
-// Örnek:
-// Container(
-//   child: Text("Merhaba Dünya"), // Container içine bir yazı ekler
-// )
-
-// `Padding` Nedir?
-// Padding, içeriğin etrafında boşluk bırakmak için kullanılır.
-// Örnek:
-// Padding(
-//   padding: EdgeInsets.all(8.0), // Tüm kenarlardan 8 birim boşluk ekler
-//   child: Text("Boşluklu metin"),
-// )
-
-// `const` ve `final` Arasındaki Farklar
-// const: Derleme zamanında belirlenen ve asla değiştirilemeyen sabitlerdir.
-// Örnek:
-// const double pi = 3.1415;
-// Bu değer, program çalışmadan önce belirlenmiştir ve değiştirilemez.
-
-// final: Çalışma zamanında bir kez atanabilir ancak sonradan değiştirilemez.
-// Örnek:
-// final DateTime zaman = DateTime.now();
-// Bu değer, program çalışırken belirlenir ancak daha sonra değiştirilemez.
-
-// `EdgeInsets.all()` Nedir?
-// Widget'in etrafına boşluk (padding) eklemek için kullanılan bir yardımcı sınıftır.
-// .all() tüm kenarlara eşit miktarda boşluk ekler.
-// Örnek:
-// Padding(
-//   padding: EdgeInsets.all(16.0), // Her kenardan 16 birim boşluk ekler
-//   child: Text("Kenarlardan boşluk bırakılmış metin"),
-// )
