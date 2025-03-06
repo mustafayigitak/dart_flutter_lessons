@@ -9,17 +9,11 @@ void main() {
   runApp(const MyApp());
 }
 
-// MyApp, uygulamanın ana widget'ıdır ve StatelessWidget'tan türetilir.
-// StatelessWidget, durumu (state) değişmeyen widget'lar için kullanılır.
 class MyApp extends StatelessWidget {
   // const, bu widget'ın sabit olduğunu ve değişmeyeceğini belirtir.
-  // super.key, üst sınıfa bir kimlik (key)传递 eder; genellikle opsiyonel.
+  // super.key, üst sınıfa bir kimlik (key) eder; genellikle opsiyonel.
   const MyApp({super.key});
 
-  // build metodu, widget'ın ekranda nasıl görüneceğini tanımlar.
-  // @override, üst sınıftaki build metodunu geçersiz kıldığımızı gösterir.
-  // Widget, geri dönüş türüdür; Flutter'da her şey bir widget'tır.
-  // BuildContext, widget'ın ağaçtaki yerini temsil eden bir parametredir.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,21 +24,13 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// MyHomePage, durumu değişebilen bir widget'tır; StatefulWidget'tan türetilir.
-// StatefulWidget, kullanıcı etkileşimi gibi durumlarda değişebilen yapılar için kullanılır.
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
-  // createState, bu widget'ın durumunu (state) yöneten bir sınıf oluşturur.
-  // State<MyHomePage>, hangi widget’a bağlı olduğunu belirtir (generic type).
-  // =>, kısa bir fonksiyon yazımıdır; burada _MyHomePageState sınıfını döndürür.
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-// _MyHomePageState, MyHomePage'in durumunu yöneten sınıftır.
-// State sınıfından türetilir ve dinamik davranışları kontrol eder.
-// _ ile başlayan isimler, Dart’ta private (özel) olduğunu gösterir.
 class _MyHomePageState extends State<MyHomePage> {
   // build metodu, ekranın nasıl görüneceğini tanımlar.
   @override
@@ -64,7 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // initState, widget ilk oluşturulduğunda bir kez çalışır.
   // super.initState(), üst sınıfın initState metodunu çağırır (gerekli bir kural).
   @override
   void initState() {
@@ -76,8 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // runDartExamples, Dart örneklerini konsola yazdıran bir fonksiyondur.
   // void, bu fonksiyonun değer döndürmediğini belirtir.
   void runDartExamples() {
-    // debugPrint, Flutter'da yalnızca debug modunda çalışan bir konsol çıktısı fonksiyonudur.
-    // Bu, avoid_print linter uyarılarını çözer ve eğitim için uygun bir seçenektir.
+    // debugPrint, debug modunda konsola yazı yazdırır.
     debugPrint("=== DART ÖRNEKLERİ BAŞLIYOR ===");
 
     // --------------------------------------
