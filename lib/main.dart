@@ -9,11 +9,17 @@ void main() {
   runApp(const MyApp());
 }
 
+// MyApp, uygulamanın ana widget'ıdır ve StatelessWidget'tan türetilir.
+// StatelessWidget, durumu (state) değişmeyen widget'lar için kullanılır.
 class MyApp extends StatelessWidget {
   // const, bu widget'ın sabit olduğunu ve değişmeyeceğini belirtir.
-  // super.key, üst sınıfa bir kimlik (key) eder; genellikle opsiyonel.
+  // super.key, üst sınıfa bir kimlik (key)传递 eder; genellikle opsiyonel.
   const MyApp({super.key});
 
+  // build metodu, widget'ın ekranda nasıl görüneceğini tanımlar.
+  // @override, üst sınıftaki build metodunu geçersiz kıldığımızı gösterir.
+  // Widget, geri dönüş türüdür; Flutter'da her şey bir widget'tır.
+  // BuildContext, widget'ın ağaçtaki yerini temsil eden bir parametredir.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,13 +30,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// MyHomePage, durumu değişebilen bir widget'tır; StatefulWidget'tan türetilir.
+// StatefulWidget, kullanıcı etkileşimi gibi durumlarda değişebilen yapılar için kullanılır.
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
+  // createState, bu widget'ın durumunu (state) yöneten bir sınıf oluşturur.
+  // State<MyHomePage>, hangi widget’a bağlı olduğunu belirtir (generic type).
+  // =>, kısa bir fonksiyon yazımıdır; burada _MyHomePageState sınıfını döndürür.
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+// _MyHomePageState, MyHomePage'in durumunu yöneten sınıftır.
+// State sınıfından türetilir ve dinamik davranışları kontrol eder.
+// _ ile başlayan isimler, Dart’ta private (özel) olduğunu gösterir.
 class _MyHomePageState extends State<MyHomePage> {
   // build metodu, ekranın nasıl görüneceğini tanımlar.
   @override
@@ -50,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // initState, widget ilk oluşturulduğunda bir kez çalışır.
   // super.initState(), üst sınıfın initState metodunu çağırır (gerekli bir kural).
   @override
   void initState() {
@@ -71,47 +86,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // 1.1 Değişkenler ve Sabitler
     debugPrint("1.1 Değişkenler ve Sabitler:");
-    // var, türü otomatik algılanan bir değişken tanımlar.
-    var name = "Ahmet"; // String türünde bir veri.
-    // debugPrint ile name değişkenini yazdırıyoruz.
-    // $name, string içinde değişkeni doğrudan kullanmamızı sağlar (string interpolation).
+    var name = "Ahmet";
     debugPrint("Değişken (var): $name");
 
-    // String, metin türünde bir değişken tanımlar.
     String surname = "Yılmaz";
     debugPrint("String değişken: $surname");
 
-    // int, tam sayı türünde bir değişken tanımlar.
     int age = 20;
     debugPrint("Yaş (int): $age");
 
-    // double, ondalık sayı türünde bir değişken tanımlar.
     double height = 1.75;
     debugPrint("Boy (double): $height");
 
-    // const, derleme zamanında sabit bir değer tanımlar; değiştirilemez.
     const String country = "Türkiye";
     debugPrint("Sabit (const): $country");
 
-    // final, bir kez atanır ve sonra değiştirilemez; çalışma zamanında değer alabilir.
     final int birthYear = 2004;
     debugPrint("Sabit (final): $birthYear");
 
     // 1.2 Tür Dönüşümleri
     debugPrint("\n1.2 Tür Dönüşümleri:");
-    // String türünde bir değişken.
     String ageString = "25";
-    // int.parse, String’i tam sayıya (int) çevirir.
     int convertedAge = int.parse(ageString);
     debugPrint("String'den int'e: $convertedAge");
 
-    // toString, bir değeri String’e çevirir.
     String ageToString = convertedAge.toString();
     debugPrint("int'ten String'e: $ageToString");
 
-    // double türünde bir değişken.
     double weight = 70.5;
-    // toInt, ondalık sayıyı tam sayıya çevirir (ondalık kısım atılır).
     int weightInt = weight.toInt();
     debugPrint("double'dan int'e: $weightInt");
 
@@ -122,76 +124,117 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // 2.1 Karşılaştırma Operatörleri
     debugPrint("2.1 Karşılaştırma Operatörleri:");
-    // int türünde iki değişken tanımlıyoruz.
     int num1 = 10;
     int num2 = 20;
-    // ==, iki değerin eşit olup olmadığını kontrol eder; bool (true/false) döner.
     bool isEqual = num1 == num2;
     debugPrint("$num1 == $num2: $isEqual");
 
-    // >, bir değerin diğerinden büyük olup olmadığını kontrol eder.
     bool isGreater = num1 > num2;
     debugPrint("$num1 > $num2: $isGreater");
 
-    // <=, bir değerin diğerinden küçük veya eşit olup olmadığını kontrol eder.
     bool isLessOrEqual = num1 <= num2;
     debugPrint("$num1 <= $num2: $isLessOrEqual");
 
     // 2.2 If-Else Yapısı
     debugPrint("\n2.2 If-Else Yapısı:");
-    // if, bir koşul doğruysa içindeki kodu çalıştırır.
     if (num1 < num2) {
       debugPrint("$num1, $num2'den küçüktür.");
     } else if (num1 == num2) {
-      // else if, önceki koşul yanlışsa başka bir koşulu kontrol eder.
       debugPrint("$num1, $num2'ye eşittir.");
     } else {
-      // else, hiçbir koşul doğru değilse çalışır.
       debugPrint("$num1, $num2'den büyüktür.");
     }
 
     // 2.3 Switch-Case Yapısı
     debugPrint("\n2.3 Switch-Case Yapısı:");
-    // int türünde bir değişken.
     int day = 3;
-    // switch, bir değişkenin değerine göre farklı durumları kontrol eder.
     switch (day) {
-      case 1: // day 1 ise bu blok çalışır.
+      case 1:
         debugPrint("Pazartesi");
-        break; // break, switch’ten çıkmayı sağlar.
+        break;
       case 2:
         debugPrint("Salı");
         break;
       case 3:
         debugPrint("Çarşamba");
         break;
-      default: // Hiçbir case eşleşmezse bu blok çalışır.
+      default:
         debugPrint("Geçersiz gün");
     }
 
     // 2.4 Döngüler
     debugPrint("\n2.4 Döngüler:");
-    // for döngüsü: Belirli bir aralıkta tekrar yapar.
     debugPrint("for döngüsü (1-5):");
-    // int i = 1, başlangıç değeri; i <= 5, koşul; i++, her turda i’yi artırır.
     for (int i = 1; i <= 5; i++) {
       debugPrint("Sayı: $i");
     }
 
-    // while döngüsü: Koşul doğru olduğu sürece çalışır.
-    int counter = 0; // Döngü için bir sayaç.
+    int counter = 0;
     debugPrint("while döngüsü (0-2):");
     while (counter < 3) {
       debugPrint("Counter: $counter");
-      counter++; // counter’ı artırmazsak sonsuz döngü olur!
+      counter++;
     }
 
-    // do-while döngüsü: En az bir kez çalışır, sonra koşulu kontrol eder.
     int value = 5;
     debugPrint("do-while döngüsü (geri sayım):");
     do {
       debugPrint("Değer: $value");
-      value--; // value’yu azaltır.
-    } while (value > 0); // Koşul, döngünün devam edip etmeyeceğini belirler.
+      value--;
+    } while (value > 0);
+
+    // --------------------------------------
+    // 3. BÖLÜM: FONKSİYONLAR
+    // --------------------------------------
+    debugPrint("\n=== 3. BÖLÜM: FONKSİYONLAR ===");
+    
+    // 3.1 Basit Bir Fonksiyon (Değer Döndürmeyen)
+    debugPrint("3.1 Basit Bir Fonksiyon (Değer Döndürmeyen):");
+    void sayHello() {
+      debugPrint("Merhaba, Dünya!");
+    }
+    sayHello();
+
+    // 3.2 Parametre Alan Fonksiyon
+    debugPrint("\n3.2 Parametre Alan Fonksiyon:");
+    // greet, bir kişiye selam vermek için kullanılan bir fonksiyondur.
+    // String türünde bir parametre (personName) alır.
+    // Bu parametre, selam verilecek kişinin adını temsil eder.
+    // Fonksiyon, "Merhaba, [personName]!" şeklinde bir mesaj yazdırır.
+    void greet(String personName) {
+      debugPrint("Merhaba, $personName!");
+    }
+    // greet fonksiyonunu farklı isimlerle çağırıyoruz.
+    greet("Ahmet"); // "Merhaba, Ahmet!" yazdırır.
+    greet("Ayşe");  // "Merhaba, Ayşe!" yazdırır.
+
+    // 3.3 Değer Döndüren Fonksiyon
+    debugPrint("\n3.3 Değer Döndüren Fonksiyon:");
+    int add(int a, int b) {
+      return a + b;
+    }
+    int sum = add(5, 3);
+    debugPrint("5 + 3 = $sum");
+
+    // 3.4 Opsiyonel Parametreli Fonksiyon
+    debugPrint("\n3.4 Opsiyonel Parametreli Fonksiyon:");
+    void introduce(String name, [String? hobby = "bilinmiyor"]) {
+      debugPrint("$name'in hobisi: $hobby");
+    }
+    introduce("Ali");
+    introduce("Zeynep", "kitap okumak");
+
+    // 3.5 İsimlendirilmiş Parametreli Fonksiyon
+    debugPrint("\n3.5 İsimlendirilmiş Parametreli Fonksiyon:");
+    void describePerson({required String name, int age = 0}) {
+      debugPrint("Ad: $name, Yaş: $age");
+    }
+    describePerson(name: "Fatma", age: 25);
+    describePerson(name: "Mehmet");
+
+    // 3.6 Kısa Fonksiyon Yazımı (Fat Arrow)
+    debugPrint("\n3.6 Kısa Fonksiyon Yazımı (Fat Arrow):");
+    int multiply(int x, int y) => x * y;
+    debugPrint("4 * 5 = ${multiply(4, 5)}");
   }
 }
